@@ -1,17 +1,30 @@
 import os
-from groq import Groq
-from dotenv import load_dotenv
+from openai import OpenAI
 
-load_dotenv()
-
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+client = OpenAI(
+    base_url="https://api.groq.com/openai/v1", api_key=os.environ.get("GROQ_API_KEY")
+)
 
 response = client.chat.completions.create(
-    model="llama-3.3-70b-versatile",
+    model="meta-llama/llama-4-scout-17b-16e-instruct",
     messages=[
-        {"role": "system", "content": "Think yourself as a strong Adolf Hitler hater"},
-        {"role": "user", "content": "Talk about Adolf Hitler"},
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "Who is this?",
+                },
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDN_x3qsMAqlbRhBpGwv44hqQphdGCvCQkGD4hTuAww4EhMOVJyT2l55-hj2WMNBfit5ExLhwCdozA9eD-Ae2yCsqtFAoTvzu23yt80uCWrQ&s=10",
+                    },
+                },
+            ],
+        }
     ],
 )
+
 
 print(response.choices[0].message.content)
