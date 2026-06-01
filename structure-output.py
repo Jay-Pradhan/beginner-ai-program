@@ -31,7 +31,10 @@ response = client.beta.chat.completions.create(
 )
 
 raw_json = response.choices[0].message.content
-details = Details(**json.loads(raw_json))
+if raw_json is not None:
+    details = Details(**json.loads(raw_json))
+else:
+    raise ValueError("No content in response")
 
 print("----DETAILS----")
 print(f"Name: {details.name}")
