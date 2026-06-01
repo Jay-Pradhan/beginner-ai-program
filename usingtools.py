@@ -31,8 +31,8 @@ tools = [
             "parameters": {
                 "type": "object",
                 "properties": {
-                    "latitude": {"type: number"},
-                    "longitude": {"type: number"},
+                    "latitude": {"type": "number"},
+                    "longitude": {"type": "number"},
                 },
                 "required": ["latitude", "longitude"],
                 "additionalProperties": False,
@@ -41,3 +41,15 @@ tools = [
         },
     }
 ]
+
+system_prompt = "You are a helpful a weather assistant, satisfy user's expectations"
+user_prompt = input("You: ")
+
+messages = [
+    {"role": "system", "content": system_prompt},
+    {"role": "user", "content": user_prompt},
+]
+
+response = client.chat.completions.create(
+    model="llama-3.3-70b-versatile", messages=messages, tools=tools
+)
