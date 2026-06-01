@@ -2,15 +2,13 @@ import os
 from dotenv import load_dotenv
 
 import json
-from openai import OpenAI
+from groq import Groq
 import requests
 from pydantic import BaseModel, Field
 
 load_dotenv()
 
-client = OpenAI(
-    base_url="https://api.groq.com/openai/v1", api_key=os.getenv("GROQ_API_KEY")
-)
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 
 def weather(latitude, longitude):
@@ -27,7 +25,7 @@ tools = [
         "type": "function",
         "function": {
             "name": "weather",
-            "description": "Get the current situation of weather of the provided coordinates",
+            "description": "Get the current situation of weather and give a brief description about it",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -37,17 +35,22 @@ tools = [
                 "required": ["latitude", "longitude"],
                 "additionalProperties": False,
             },
-            "strict": True,
         },
     }
 ]
 
-system_prompt = "You are a helpful a weather assistant, satisfy user's expectations"
-# user_prompt = input("You: ")
+system_prompt = """You are a helpful a weather assistant, satisfy user's expectations.
+                   Respond only in this JSON format:
+                                {
+                                "description": "natural language for a weather description",
+                                "response": "helpful and polite response to the user"
+                                } 
+                """
+user_prompt = input("You: ")
 
 messages = [
     {"role": "system", "content": system_prompt},
-    {"role": "user", "content": "Tell me about the weather in bhubaneswar"},
+    {"role": "user", "content": user_prompt},
 ]
 
 response = client.chat.completions.create(
@@ -60,7 +63,7 @@ response.model_dump()
 
 def call_function(name, args):
     if name == "weather":
-        weather(**args)
+        return weather(**args)
 
 
 for tool_call in response.choices[0].message.tool_calls:
@@ -68,7 +71,27 @@ for tool_call in response.choices[0].message.tool_calls:
     args = json.loads(tool_call.function.arguments)
     messages.append(response.choices[0].message)
 
-result = call_function(name, args)
-messages.append(
-    {"role": "tool", "tool_call.id": tool_call.id, "content": json.dumps(result)}
+    result = call_function(name, args)
+    messages.append(
+        {"role": "tool", "tool_call_id": tool_call.id, "content": json.dumps(result)}
+    )
+
+
+class WeatherResponse(BaseModel):
+    description: str = Field(description="Natural language for a weather description")
+    response: str = Field(
+        description="Helpful and polite response to the user's querry"
+    )
+
+
+response_2 = client.chat.completions.create(
+    model="llama-3.3-70b-versatile",
+    messages=messages,
+    response_format={"type": "json_object"},
 )
+
+raw_json = response_2.choices[0].message.content
+weather_report = WeatherResponse.model_validate_json(raw_json)
+
+print(weather_report.description)
+print(weather_report.response)
