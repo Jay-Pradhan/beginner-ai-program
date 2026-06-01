@@ -56,3 +56,19 @@ response = client.chat.completions.create(
 
 
 response.model_dump()
+
+
+def call_function(name, args):
+    if name == "weather":
+        weather(**args)
+
+
+for tool_call in response.choices[0].message.tool_calls:
+    name = tool_call.function.name
+    args = json.loads(tool_call.function.arguments)
+    messages.append(response.choices[0].message)
+
+result = call_function(name, args)
+messages.append(
+    {"role": "tool", "tool_call.id": tool_call.id, "content": json.dumps(result)}
+)
