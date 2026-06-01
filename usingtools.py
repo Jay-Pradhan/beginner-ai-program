@@ -20,3 +20,24 @@ def weather(latitude, longitude):
 
     data = api.json()
     return data["current"]
+
+
+tools = [
+    {
+        "type": "function",
+        "function": {
+            "name": "weather",
+            "description": "Get the current situation of weather of the provided coordinates",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "latitude": {"type: number"},
+                    "longitude": {"type: number"},
+                },
+                "required": ["latitude", "longitude"],
+                "additionalProperties": False,
+            },
+            "strict": True,
+        },
+    }
+]
