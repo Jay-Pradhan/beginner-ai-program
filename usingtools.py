@@ -10,6 +10,8 @@ load_dotenv()
 
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
+print("\n                                         *****WEATHER ASSITANT*****\n")
+
 
 def weather(latitude, longitude):
     api = requests.get(
@@ -47,6 +49,7 @@ system_prompt = """You are a helpful a weather assistant, satisfy user's expecta
                                 } 
                 """
 user_prompt = input("You: ")
+print()
 
 messages = [
     {"role": "system", "content": system_prompt},
@@ -93,5 +96,6 @@ response_2 = client.chat.completions.create(
 raw_json = response_2.choices[0].message.content
 weather_report = WeatherResponse.model_validate_json(raw_json)
 
+print("Assistant: ", end="")
 print(weather_report.description)
 print(weather_report.response)
