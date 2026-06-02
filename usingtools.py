@@ -45,7 +45,7 @@ system_prompt = """You are a helpful a weather assistant, satisfy user's expecta
                    Respond only in this JSON format:
                                 {
                                 "description": "natural language for a weather description",
-                                "response": "helpful and polite response to the user"
+                                "response": "describe about it's beauty and any other unique feature"
                                 } 
                 """
 user_prompt = input("You: ")
@@ -83,7 +83,7 @@ for tool_call in response.choices[0].message.tool_calls:
 class WeatherResponse(BaseModel):
     description: str = Field(description="Natural language for a weather description")
     response: str = Field(
-        description="Helpful and polite response to the user's querry"
+        description="Describe about it's beauty and any other unique feature"
     )
 
 
