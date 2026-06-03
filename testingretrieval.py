@@ -22,8 +22,8 @@ tools = [
             "description": "Get the answers to the user's question from the iplKB.json knowlege base",
             "parameters": {
                 "type": "object",
-                "properties": {"question": {"type": "string"}},
-                "required": ["questions"],
+                "properties": {},
+                "required": [],
                 "additionalProperties": False,
             },
         },
@@ -58,28 +58,45 @@ while True:
     )
 
     if response.choices[0].message.tool_calls:
-        messages.append(response.choices[0].message)
+        msg = response.choices[0].message
+        messages.append(
+            {
+                "role": "assistant",
+                "content": msg.content,
+                "tool_calls": [
+                    {
+                        "id": tc.id,
+                        "type": "function",
+                        "function": {
+                            "name": tc.function.name,
+                            "arguments": tc.function.arguments,
+                        },
+                    }
+                    for tc in msg.tool_calls
+                ],
+            }
+        )
 
         for tool_call in response.choices[0].message.tool_calls:
             result = get_questions()
 
-            messages.append(
-                {
-                    "role": "tool",
-                    "tool_call_id": tool_call.id,
-                    "content": json.dumps(result),
-                }
-            )
+        messages.append(
+            {
+                "role": "tool",
+                "tool_call_id": tool_call.id,
+                "content": json.dumps(result),
+            }
+        )
 
         response_2 = client.chat.completions.create(
-            model="llama-3.3-70b-versatile", messages=messages, tools=tools
+            model="llama-3.3-70b-versatile", messages=messages
         )
 
         final_answer = response_2.choices[0].message.content
-        messages.append({"role": "assitant", "content": final_answer})
+        messages.append({"role": "assistant", "content": final_answer})
         print(f"Assistant: {final_answer}")
 
     else:
         final_answer = response.choices[0].message.content
-        messages.append({"role": "assitant", "content": final_answer})
+        messages.append({"role": "assistant", "content": final_answer})
         print(f"Assistant: {final_answer}")
