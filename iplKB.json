@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "question": "Which team has won the most IPL titles?",
+    "answer": "Mumbai Indians, with 5 IPL titles (2013, 2015, 2017, 2019, 2020)."
+  },
+  {
+    "id": 2,
+    "question": "Who holds the record for the most runs in IPL history?",
+    "answer": "Virat Kohli holds the record for the most runs in IPL history, having scored over 8,000 runs."
+  },
+  {
+    "id": 3,
+    "question": "Which player has taken the most wickets in IPL history?",
+    "answer": "Yuzvendra Chahal holds the record for the most wickets in IPL history."
+  },
+  {
+    "id": 4,
+    "question": "In which year was the Indian Premier League (IPL) founded?",
+    "answer": "The IPL was founded in 2007 and the first season was played in 2008."
+  },
+  {
+    "id": 5,
+    "question": "What is the highest team total in IPL history?",
+    "answer": "Sunrisers Hyderabad scored 287/3 against Royal Challengers Bengaluru in 2024, the highest team total in IPL history."
+  },
+  {
+    "id": 6,
+    "question": "Who has hit the most sixes in IPL history?",
+    "answer": "Chris Gayle holds the record for the most sixes in IPL history with over 350 sixes."
+  },
+  {
+    "id": 7,
+    "question": "Which team was the first-ever IPL champion?",
+    "answer": "Rajasthan Royals won the inaugural IPL title in 2008."
+  },
+  {
+    "id": 8,
+    "question": "Which player scored the first century in IPL history?",
+    "answer": "Brendon McCullum scored the first century in IPL history during the opening match of IPL 2008, playing for Kolkata Knight Riders."
+  },
+  {
+    "id": 9,
+    "question": "What does 'Orange Cap' signify in the IPL?",
+    "answer": "The Orange Cap is awarded to the highest run-scorer of the IPL season."
+  },
+  {
+    "id": 10,
+    "question": "Which stadium has hosted the most IPL matches?",
+    "answer": "The Wankhede Stadium in Mumbai has hosted the most IPL matches."
+  }
+]
