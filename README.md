@@ -4,11 +4,10 @@ This is not exactly an AI based project where I build an AI agentic system but r
 
 # FILES
 
-*example.py*
-*structured-output.py*
-*usingtools.py*
-*testingretrieval.py*
-        |________________iplKB.json
+>*example.py*
+>*structured-output.py*
+>*usingtools.py*
+>*testingretrieval.py*
 
 
 1. __example.py__
