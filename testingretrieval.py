@@ -40,16 +40,16 @@ system_prompt = """You are a helpful IPL assitant. You will provide the answers 
 messages = [{"role": "system", "content": system_prompt}]
 
 while True:
-    # user_input = input("Enter your question: ")
+    user_input = input("Enter your question: ")
 
-    # if user_input in ["bye", "stop", "exit"]:
-    # print("Assistant: Bye:)")
-    # break
+    if user_input in ["bye", "stop", "exit"]:
+        print("Assistant: Bye:)")
+        break
 
     messages.append(
         {
             "role": "user",
-            "content": "Which player has taken the most wickets in IPL history?",
+            "content": user_input,
         }
     )
 
