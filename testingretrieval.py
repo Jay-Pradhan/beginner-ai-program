@@ -3,7 +3,6 @@ from dotenv import load_dotenv
 
 import json
 from groq import Groq
-from pydantic import BaseModel, Field
 
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
@@ -58,23 +57,16 @@ while True:
 
     response.model_dump()
 
-    def call_function(name, args):
-        if name == "get_questions":
-            return get_questions(**args)
-
     if response.choices[0].message.tool_calls:
+        messages.append(response.choices[0].message)
+
         for tool_call in response.choices[0].message.tool_calls:
-            name = tool_call.function.name
-            args = json.loads(tool_call.function.arguments)
-
-            messages.append(response.choices[0].message.content)
-
-            result = call_function(name, args)
+            result = get_questions()
 
             messages.append(
                 {
                     "role": "tool",
-                    "tool_call.id": tool_call.id,
+                    "tool_call_id": tool_call.id,
                     "content": json.dumps(result),
                 }
             )
