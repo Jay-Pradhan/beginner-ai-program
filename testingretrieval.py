@@ -39,14 +39,40 @@ system_prompt = """You are a helpful IPL assitant. You will provide the answers 
 messages = [{"role": "system", "content": system_prompt}]
 
 while True:
-    user_input = input("Enter your question: ")
+    # user_input = input("Enter your question: ")
 
-    if user_input in ["bye", "stop", "exit"]:
-        print("Assistant: Bye:)")
-        break
+    # if user_input in ["bye", "stop", "exit"]:
+    # print("Assistant: Bye:)")
+    # break
 
-    messages.append({"role": "user", "content": user_input})
+    messages.append(
+        {
+            "role": "user",
+            "content": "Which player has taken the most wickets in IPL history?",
+        }
+    )
 
     response = client.chat.completions.create(
         model="llama-3.3-70b-versatile", messages=messages, tools=tools
     )
+
+    response.model_dump()
+
+    def call_function(name, args):
+        if name == "get_questions":
+            return get_questions(**args)
+
+    if response.choices[0].message.tool_calls:
+        for tool_call in response.choices[0].message.tool_calls:
+            name = tool_call.function.name
+            args = json.loads(tool_call.function.arguments)
+
+            result = call_function(name, args)
+
+            messages.append(
+                {
+                    "role": "tool",
+                    "tool_call.id": tool_call.id,
+                    "content": json.dumps(result),
+                }
+            )
