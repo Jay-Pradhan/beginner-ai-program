@@ -32,7 +32,7 @@ tools = [
 
 system_prompt = """You are a helpful IPL assitant. You will provide the answers to the user's question from the IPL knowlege base in plain text.
 
-                   Willingly ask the user if he wants answer to any other querry
+                   Willingly ask the user if he wants answer to any other querry(only twice)
 
                    For any question not in the IPL knowlege base, just tell the user about your limitations 
 """
@@ -40,7 +40,7 @@ system_prompt = """You are a helpful IPL assitant. You will provide the answers 
 messages = [{"role": "system", "content": system_prompt}]
 
 while True:
-    user_input = input("Enter your question: ")
+    user_input = input("\nEnter your question: ")
 
     if user_input in ["bye", "stop", "exit"]:
         print("Assistant: Bye:)")
