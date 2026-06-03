@@ -21,7 +21,7 @@ tools = [
             "description": "Get the answers to the user's question from the iplKB.json knowlege base",
             "parameters": {
                 "type": "object",
-                "properties": {"questions": {"type": "string"}},
+                "properties": {"question": {"type": "string"}},
                 "required": ["questions"],
                 "additionalProperties": False,
             },
@@ -66,6 +66,8 @@ while True:
         for tool_call in response.choices[0].message.tool_calls:
             name = tool_call.function.name
             args = json.loads(tool_call.function.arguments)
+
+            messages.append(response.choices[0].message.content)
 
             result = call_function(name, args)
 
