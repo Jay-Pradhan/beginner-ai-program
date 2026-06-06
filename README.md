@@ -1,6 +1,6 @@
 # NOTE
 
-This is not exactly an AI based project where I build an AI agentic system but rather is a repository during my _learning process_
+This is the first part of my _AI learning process_. This contains projects just at a beginner level. Topics like basic API Calls, Structured Output, Tool Calling, Retrieval and Memory is covered here. 
 
 # FILES
 
