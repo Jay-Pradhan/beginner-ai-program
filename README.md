@@ -1,6 +1,12 @@
 # NOTE
 
-This is the first part of my _AI learning process_. This contains projects just at a beginner level. Topics like basic API Calls, Structured Output, Tool Calling, Retrieval and Memory is covered here. 
+This is the first part of my _AI learning process_. This contains projects just at a beginner level. Topics like basic API Calls, Structured Output, Tool Calling, Retrieval and Memory is covered here.
+
+> All the topics are based on the building block of an AI Agentic System
+
+> This gives birth to Augmented LLMs which can generate their own search queries, select appropriate tools, and determine what information to retain.
+
+![Augmented AI](image.png)
 
 # FILES
 
